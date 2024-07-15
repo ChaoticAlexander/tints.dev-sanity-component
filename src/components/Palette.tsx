@@ -155,11 +155,11 @@ export default function Palette(props: PaletteProps) {
   return (
     <article id={`s-${palette.value}`} className="grid grid-cols-1 gap-4 text-gray-500">
       <style>{styleString}</style>
-      <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
+      <div className="flex w-full">
         {paletteInputs.map((input) => (
           <div
             key={input.name}
-            className="flex flex-col gap-1 col-span-2 focus-within:text-gray-900"
+            className="w-full flex flex-col gap-1 col-span-2 focus-within:text-gray-900"
           >
             <label className={labelClasses} htmlFor={input.name}>
               {input.title}
