@@ -1,10 +1,8 @@
 {
   "extends": [
-    "@remix-run/eslint-config",
-    "@remix-run/eslint-config/node",
     "prettier"
   ],
-  "ignorePatterns": ["node_modules", "build", ".cache"],
+  "ignorePatterns": ["node_modules", "build", ".cache", "dist"],
   "plugins": ["simple-import-sort", "prettier"],
   "rules": {
     "simple-import-sort/imports": "error",

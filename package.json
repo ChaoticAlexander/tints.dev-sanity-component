@@ -1,17 +1,27 @@
 {
-  "name": "tints.dev",
+  "name": "tints.dev-sanity-component",
   "type": "module",
   "description": "A 10-swatch palette generator primarily for Tailwind CSS",
   "license": "MIT",
   "version": "2.0.0",
   "author": "Simeon Griggs",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/tints-dev-compoennts.umd.js",
+  "module": "./dist/tints-dev-compoennts.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/tints-dev-compoennts.es.js",
+      "require": "./dist/tints-dev-compoennts.umd.js"
+    }
+  },
   "scripts": {
-    "dev": "remix vite:dev",
-    "build": "remix vite:build",
-    "lint": "eslint . --fix",
+    "dev": "vite dev",
+    "build": "vite build",
+    "lint": "eslint --fix",
     "typecheck": "tsc --noEmit",
-    "cy:open": "cypress open",
-    "cy:run": "cypress run",
     "postinstall": "husky install"
   },
   "husky": {
