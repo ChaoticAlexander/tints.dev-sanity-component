@@ -19,10 +19,12 @@
   },
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build": "npm run build:css && vite build",
     "lint": "eslint --fix",
+    "build:css": "tailwindcss -o dist/styles.css",
     "typecheck": "tsc --noEmit",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "prepare": "npm run build"
   },
   "husky": {
     "hooks": {
