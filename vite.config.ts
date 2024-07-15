@@ -12,9 +12,6 @@ export default defineConfig({
     },
     rollupOptions: {
       external: ["react", "react-dom"],
-      input: {
-        styles: "src/styles.css",
-      },
       output: {
         globals: {
           react: "React",
@@ -22,6 +19,5 @@ export default defineConfig({
         },
       },
     },
-    cssCodeSplit: true,
   },
 });
