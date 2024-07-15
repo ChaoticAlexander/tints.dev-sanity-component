@@ -1,9 +1,10 @@
 import { defineConfig } from "vite";
+import { libInjectCss } from "vite-plugin-lib-inject-css";
 import tsconfigPaths from "vite-tsconfig-paths";
 import path from "path";
 
 export default defineConfig({
-  plugins: [tsconfigPaths()],
+  plugins: [tsconfigPaths(), libInjectCss()],
   build: {
     lib: {
       entry: path.resolve(__dirname, "src/index.ts"),
