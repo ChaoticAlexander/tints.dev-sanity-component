@@ -9,5 +9,5 @@ interface PaletteInputProps {
 }
 
 export default function PaletteInput({ onChange, value }: PaletteInputProps) {
-  return <Palette currentMode="hex" palette={value || createRandomPalette()} updateGlobal={onChange} />
+  return <Palette currentMode="hex" palette={createRandomPalette()} updateGlobal={onChange} />
 }
