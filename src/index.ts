@@ -6,5 +6,6 @@ export { default as ColorPicker } from "./components/ColorPicker";
 export type { SwatchValue, Mode, PaletteConfig } from "./types";
 
 export { createRandomPalette } from "./lib/createRandomPalette";
+export { createSwatches } from "./lib/createSwatches";
 
 export { DEFAULT_STOP, MODES, DEFAULT_PALETTE_CONFIG } from "./lib/constants";
