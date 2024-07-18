@@ -1,6 +1,6 @@
 import {Switch} from '@headlessui/react'
 import {HashtagIcon} from '@heroicons/react/24/solid'
-import React, {useEffect, useMemo, useState} from 'react'
+import React, {useEffect, useMemo, useState, useCallback} from 'react'
 
 import Swatch from '~/components/Swatch'
 import {DEFAULT_PALETTE_CONFIG, DEFAULT_STOPS} from '~/lib/constants'
@@ -29,7 +29,6 @@ export const labelClasses = `transition-color duration-200 text-xs font-bold`
 type PaletteProps = {
   palette: PaletteConfig
   updateGlobal: (updatedPalette: PaletteConfig) => void
-  deleteGlobal?: () => void
   currentMode: Mode
 }
 
@@ -42,6 +41,10 @@ export default function Palette(props: PaletteProps) {
     swatches: palette.swatches ?? createSwatches(palette),
   })
 
+  const onChange = useCallback((palette: PaletteConfig) => {
+    updateGlobal(palette)
+  }, [updateGlobal])
+
   // Update global list every time local palette changes
   // ... if name and value are legit
   useEffect(() => {
@@ -49,17 +52,12 @@ export default function Palette(props: PaletteProps) {
     const validValue = isHex(paletteState.value) ? paletteState.value : null
 
     if (validName && validValue) {
-      updateGlobal(paletteState)
+      onChange(paletteState)
     }
-  }, [palette, paletteState, updateGlobal])
+  }, [palette, paletteState])
 
   const updateName = (name: string) => {
     // Remove current search param
-    if (typeof document !== 'undefined' && isValidName(name)) {
-      const currentUrl = new URL(window.location.href)
-      currentUrl.searchParams.delete(paletteState.name)
-      window.history.replaceState({}, '', currentUrl.toString())
-    }
 
     setPaletteState({
       ...paletteState,

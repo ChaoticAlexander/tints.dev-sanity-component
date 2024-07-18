@@ -10,7 +10,6 @@
   ],
   "main": "./dist/tints-dev-components.umd.js",
   "module": "./dist/tints-dev-components.es.js",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/tints-dev-components.es.js",
