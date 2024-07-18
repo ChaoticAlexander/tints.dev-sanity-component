@@ -38,7 +38,7 @@ export default function Palette(props: PaletteProps) {
   const [paletteState, setPaletteState] = useState({
     ...DEFAULT_PALETTE_CONFIG,
     ...palette,
-    swatches: palette.swatches ?? createSwatches(palette),
+    swatches: palette?.swatches ?? createSwatches(palette),
   })
 
   const onChange = useCallback((palette: PaletteConfig) => {
@@ -54,7 +54,7 @@ export default function Palette(props: PaletteProps) {
     if (validName && validValue) {
       onChange(paletteState)
     }
-  }, [palette, paletteState])
+  }, [paletteState])
 
   const updateName = (name: string) => {
     // Remove current search param
