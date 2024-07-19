@@ -5,11 +5,12 @@ import React, {useEffect, useMemo, useState, useCallback} from 'react'
 import Swatch from '~/components/Swatch'
 import {DEFAULT_PALETTE_CONFIG, DEFAULT_STOPS} from '~/lib/constants'
 import {createSwatches} from '~/lib/createSwatches'
-import {isHex, isValidName} from '~/lib/helpers'
+import {isHex} from '~/lib/helpers'
 import type {Mode, PaletteConfig} from '~/types'
 
 import ColorPicker from './ColorPicker'
 import StopSelect from './StopSelect'
+import { createRandomPalette } from '~/lib/createRandomPalette'
 
 const paletteInputs = [
   {
@@ -35,34 +36,43 @@ type PaletteProps = {
 export default function Palette(props: PaletteProps) {
   const {palette, updateGlobal, currentMode} = props
 
-  const [paletteState, setPaletteState] = useState({
+  const getInitialState = () => ({
+    ...palette ? {
     ...DEFAULT_PALETTE_CONFIG,
     ...palette,
     swatches: palette?.swatches ?? createSwatches(palette),
+    } : createRandomPalette()
   })
 
+  const [paletteState, setPaletteState] = useState(getInitialState())
+
   const onChange = useCallback((palette: PaletteConfig) => {
-    updateGlobal(palette)
+    if (paletteChanged(palette, paletteState)) updateGlobal(palette)
   }, [updateGlobal])
+
+  useEffect(() => {
+    setPaletteState(getInitialState())
+  }, [palette])
 
   // Update global list every time local palette changes
   // ... if name and value are legit
   useEffect(() => {
-    const validName = isValidName(paletteState.name) ? paletteState.name : null
     const validValue = isHex(paletteState.value) ? paletteState.value : null
 
-    if (validName && validValue) {
+    if (validValue) {
       onChange(paletteState)
     }
   }, [paletteState])
 
-  const updateName = (name: string) => {
-    // Remove current search param
+  const paletteChanged = (oldVal: PaletteConfig | undefined, newVal: PaletteConfig) => {
+    const isPaletteSame = (
+      oldVal?.value === newVal.value &&
+      oldVal?.valueStop === newVal.valueStop &&
+      oldVal?.useLightness === newVal.useLightness &&
+      oldVal?.swatches?.length
+    )
 
-    setPaletteState({
-      ...paletteState,
-      name,
-    })
+    return !isPaletteSame
   }
 
   const updateValue = (value: string) => {
@@ -99,13 +109,8 @@ export default function Palette(props: PaletteProps) {
 
   // Handle changes to name or value of palette
   const handlePaletteChange = (e: React.FormEvent<HTMLInputElement | HTMLSelectElement>) => {
-    if (e.currentTarget.name === 'name') {
-      const newName = e.currentTarget.value ?? ``
-      updateName(newName)
-    } else if (e.currentTarget.name === 'value') {
-      const newValue = e.currentTarget.value ? e.currentTarget.value.toUpperCase() : ``
-      updateValue(newValue)
-    }
+    const newValue = e.currentTarget.value ? e.currentTarget.value.toUpperCase() : ``
+    updateValue(newValue)
   }
 
   const handleStopChange = (value: string) => {
@@ -137,7 +142,7 @@ export default function Palette(props: PaletteProps) {
   }
 
   const ringStyle = {
-    '--tw-ring-color': palette.swatches[1].hex,
+    '--tw-ring-color': paletteState.swatches[1].hex,
   } as React.CSSProperties
 
   const styleString = useMemo(
@@ -151,7 +156,7 @@ export default function Palette(props: PaletteProps) {
   )
 
   return (
-    <article id={`s-${palette.value}`} className="grid grid-cols-1 gap-4 text-gray-500">
+    <article id={`s-${paletteState.value}`} className="grid grid-cols-1 gap-4 text-gray-500">
       <style>{styleString}</style>
       <div className="flex w-full">
         {paletteInputs.map((input) => (
@@ -168,7 +173,7 @@ export default function Palette(props: PaletteProps) {
                 name={input.name}
                 className={[inputClasses, input.classes].filter(Boolean).join(' ')}
                 value={
-                  input.name === 'name' || input.name === 'value' ? paletteState[input.name] : ``
+                  input.name === 'value' ? paletteState[input.name] : ``
                 }
                 style={ringStyle}
                 onChange={handlePaletteChange}
@@ -238,7 +243,7 @@ export default function Palette(props: PaletteProps) {
         {paletteState.swatches
           .filter((swatch) => ![0, 1000].includes(swatch.stop))
           .map((swatch) => (
-            <Swatch key={swatch.stop} swatch={swatch} mode={currentMode} />
+            <Swatch key={swatch.stop} swatch={swatch} mode={currentMode} highlight={swatch.stop === paletteState.valueStop} />
           ))}
       </div>
     </article>
