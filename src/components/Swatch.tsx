@@ -22,7 +22,7 @@ export default function Swatch(props: SwatchProps) {
       <div className="rotate-90 text-right sm:rotate-0 flex flex-col sm:flex-row sm:items-center lg:flex-col xl:flex-row xl:items-center justify-between px-1">
         {highlight ? (
           <div className="font-mono" style={{color: swatch.hex, fontWeight: 'bold'}}>
-            [{swatch.stop}]
+            {swatch.stop}
           </div>
         ) : (
           <div className="font-mono">{swatch.stop}</div>
