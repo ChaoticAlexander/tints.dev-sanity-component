@@ -21,4 +21,19 @@ export default defineConfig({
       },
     },
   },
+  // Development server configuration
+  server: {
+    port: 3000,
+    open: true,
+  },
+  // Development page configuration
+  root: process.env.NODE_ENV === 'development' ? 'dev' : '.',
+  resolve: {
+    alias: {
+      '~': path.resolve(__dirname, './src'),
+    },
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom'],
+  },
 });
