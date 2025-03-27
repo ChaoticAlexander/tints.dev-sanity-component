@@ -39,7 +39,8 @@
     "build:js": "vite build",
     "build:css": "tailwindcss -o dist/styles.css",
     "lint": "eslint . --fix",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepare": "npm run build"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
