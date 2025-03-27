@@ -1,14 +1,10 @@
 import {Popover, PopoverButton, PopoverPanel} from '@headlessui/react'
-import {SwatchIcon, XMarkIcon} from '@heroicons/react/24/solid'
-import React, {useCallback, useEffect} from 'react'
+import {SwatchIcon} from '@heroicons/react/24/solid'
+import React, {useEffect} from 'react'
 import {HexColorPicker} from 'react-colorful'
 import {useDebounceValue} from 'usehooks-ts'
 
-import Button from '~/components/Button'
-import {inputClasses, labelClasses} from '~/components/Palette'
-import {hexToHSL, HSLToHex, round} from '~/lib/helpers'
-
-export default function ColorPicker({
+export default function StrippedColorPicker({
   color,
   onChange,
   ringStyle,
@@ -32,21 +28,6 @@ export default function ColorPicker({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 
-  const {h, s, l: lightness} = hexToHSL(value)
-  const handleLightnessChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newLightness = Number(e.target.value)
-
-      if (newLightness < 0 || newLightness > 100) {
-        return
-      }
-
-      const newValue = HSLToHex(h, s, newLightness)
-      setValue(newValue)
-    },
-    [h, s, setValue],
-  )
-
   return (
     <Popover className="relative">
       <PopoverButton
@@ -64,28 +45,6 @@ export default function ColorPicker({
               color={value.startsWith(`#`) ? value : `#${value}`}
               onChange={setValue}
             />
-
-            <div className="flex flex-col gap-2 px-2">
-              <label className={labelClasses} htmlFor="lightness">
-                Lightness
-              </label>
-              <input
-                className={inputClasses}
-                value={round(lightness)}
-                type="number"
-                min="0"
-                max="100"
-                onChange={handleLightnessChange}
-                name="lightness"
-              />
-            </div>
-
-            <div className="px-2 pb-2 flex justify-end">
-              <Button id="closePicker" onClick={() => close()}>
-                <XMarkIcon className="w-4 h-auto" />
-                Close
-              </Button>
-            </div>
           </div>
         )}
       </PopoverPanel>

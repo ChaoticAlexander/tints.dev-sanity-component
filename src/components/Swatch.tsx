@@ -4,11 +4,12 @@ import type {Mode, SwatchValue} from '~/types'
 
 type SwatchProps = {
   swatch: SwatchValue
-  mode?: Mode
+  mode?: Mode,
+  highlight: boolean,
 }
 
 export default function Swatch(props: SwatchProps) {
-  const {swatch, mode = DEFAULT_MODE} = props
+  const {swatch, mode = DEFAULT_MODE, highlight = false} = props
 
   let display = createDisplayColor(swatch.hex, mode)
 
@@ -18,10 +19,14 @@ export default function Swatch(props: SwatchProps) {
         className="h-12 xl:h-16 w-full rounded shadow-inner flex flex-col items-center justify-center transition-colors duration-500"
         style={{backgroundColor: display || `transparent`}}
       />
-      <div className="rotate-90 text-right sm:rotate-0 flex flex-col sm:flex-row sm:items-center lg:flex-col lg:items-start xl:flex-row xl:items-center justify-between px-1">
-        <div className="font-mono">{swatch.stop}</div>
-        {/* <div className="hidden sm:block tabular-nums opacity-50">{swatch.hex.toUpperCase()}</div> */}
-        {/* <div className="hidden sm:block tabular-nums opacity-50">{display}</div> */}
+      <div className="rotate-90 text-right sm:rotate-0 flex flex-col sm:flex-row sm:items-center lg:flex-col xl:flex-row xl:items-center justify-between px-1">
+        {highlight ? (
+          <div className="font-mono" style={{color: swatch.hex, fontWeight: 'bold'}}>
+            {swatch.stop}
+          </div>
+        ) : (
+          <div className="font-mono">{swatch.stop}</div>
+        )}
       </div>
     </div>
   )

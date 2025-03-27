@@ -1,18 +1,30 @@
 {
-  "name": "tints.dev",
+  "name": "tints.dev-sanity-component",
   "type": "module",
   "description": "A 10-swatch palette generator primarily for Tailwind CSS",
   "license": "MIT",
   "version": "2.0.0",
   "author": "Simeon Griggs",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/tints-dev-components.umd.js",
+  "module": "./dist/tints-dev-components.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/tints-dev-components.es.js",
+      "require": "./dist/tints-dev-components.umd.js"
+    }
+  },
   "scripts": {
-    "dev": "remix vite:dev",
-    "build": "remix vite:build",
-    "lint": "eslint . --fix",
+    "dev": "vite dev",
+    "build": "npm run build:css && npm run build:js",
+    "build:js": "vite build",
+    "lint": "eslint --fix",
+    "build:css": "tailwindcss -o src/styles.css",
     "typecheck": "tsc --noEmit",
-    "cy:open": "cypress open",
-    "cy:run": "cypress run",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "prepare": "npm run build"
   },
   "husky": {
     "hooks": {
@@ -46,6 +58,7 @@
     "react-popper-tooltip": "^4.4.2",
     "satori": "^0.10.13",
     "usehooks-ts": "^3.1.0",
+    "vite-plugin-lib-inject-css": "^2.1.1",
     "vite-tsconfig-paths": "^4.3.2",
     "web-vitals": "^4.1.1"
   },

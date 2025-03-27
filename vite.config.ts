@@ -1,19 +1,24 @@
-import {vitePlugin as remix} from '@remix-run/dev'
-import {installGlobals} from '@remix-run/node'
-import {vercelPreset} from '@vercel/remix/vite'
-import {defineConfig} from 'vite'
-import tsconfigPaths from 'vite-tsconfig-paths'
-
-installGlobals()
+import { defineConfig } from "vite";
+import { libInjectCss } from "vite-plugin-lib-inject-css";
+import tsconfigPaths from "vite-tsconfig-paths";
+import path from "path";
 
 export default defineConfig({
-  server: {
-    port: 3000,
+  plugins: [tsconfigPaths(), libInjectCss()],
+  build: {
+    lib: {
+      entry: path.resolve(__dirname, "src/index.ts"),
+      name: "tints.dev-components",
+      fileName: (format) => `tints-dev-components.${format}.js`,
+    },
+    rollupOptions: {
+      external: ["react", "react-dom"],
+      output: {
+        globals: {
+          react: "React",
+          "react-dom": "ReactDOM",
+        },
+      },
+    },
   },
-  plugins: [
-    remix({
-      presets: [vercelPreset()],
-    }),
-    tsconfigPaths(),
-  ],
-})
+});
