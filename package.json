@@ -1,70 +1,61 @@
 {
-  "name": "tints.dev-sanity-component",
-  "type": "module",
-  "description": "A 10-swatch palette generator primarily for Tailwind CSS",
+  "name": "@chaoticalexander/tints-palette",
+  "version": "1.0.0",
+  "description": "A standalone palette component extracted from tints.dev - A 10-swatch palette generator primarily for Tailwind CSS",
+  "author": "Alexander Tananica (fork of work by Simeon Griggs)",
   "license": "MIT",
-  "version": "2.0.0",
-  "author": "Simeon Griggs",
-  "files": [
-    "dist"
-  ],
+  "type": "module",
   "main": "./dist/tints-dev-components.umd.js",
   "module": "./dist/tints-dev-components.es.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/tints-dev-components.es.js",
       "require": "./dist/tints-dev-components.umd.js"
     }
   },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChaoticAlexander/tints.dev-sanity-component.git"
+  },
+  "homepage": "https://github.com/ChaoticAlexander/tints.dev-sanity-component#readme",
+  "bugs": {
+    "url": "https://github.com/ChaoticAlexander/tints.dev-sanity-component/issues"
+  },
+  "keywords": [
+    "tailwind",
+    "palette",
+    "color",
+    "generator",
+    "react",
+    "component"
+  ],
   "scripts": {
-    "dev": "vite dev",
+    "dev": "NODE_ENV=development vite",
     "build": "npm run build:css && npm run build:js",
     "build:js": "vite build",
-    "lint": "eslint --fix",
-    "build:css": "tailwindcss -o src/styles.css",
-    "typecheck": "tsc --noEmit",
-    "postinstall": "husky install",
-    "prepare": "npm run build"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint && npm run typecheck"
-    }
+    "build:css": "tailwindcss -o dist/styles.css",
+    "lint": "eslint . --fix",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "@heroicons/react": "^2.2.0",
-    "@mapbox/react-colorpickr": "^10.3.0",
-    "@portabletext/react": "^3.2.1",
-    "@remix-run/eslint-config": "^2.16.2",
-    "@remix-run/node": "^2.16.2",
-    "@remix-run/react": "^2.16.2",
-    "@remix-run/serve": "^2.16.2",
-    "@resvg/resvg-js": "^2.6.2",
-    "@sanity/block-content-to-react": "^3.0.0",
     "@tailwindcss/typography": "^0.5.16",
-    "@vercel/analytics": "^1.5.0",
-    "@vercel/remix": "2.9.2-patch.2",
     "chroma-js": "^2.6.0",
     "clsx": "^2.1.1",
-    "cypress": "^13.17.0",
-    "husky": "^9.1.7",
-    "isbot": "^5.1.25",
-    "nanoid": "^5.1.5",
     "react": "^18.3.1",
     "react-colorful": "^5.6.1",
     "react-dom": "^18.3.1",
-    "react-fast-compare": "^3.2.2",
     "react-popper-tooltip": "^4.4.2",
-    "satori": "^0.10.14",
     "usehooks-ts": "^3.1.1",
     "vite-plugin-lib-inject-css": "^2.2.1",
-    "vite-tsconfig-paths": "^4.3.2",
-    "web-vitals": "^4.2.4"
+    "vite-tsconfig-paths": "^4.3.2"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.27.0",
-    "@remix-run/dev": "^2.16.2",
     "@types/chroma-js": "^2.4.5",
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.5",
@@ -74,9 +65,6 @@
     "esbuild": "^0.21.5",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-import-resolver-webpack": "^0.13.10",
-    "eslint-plugin-cypress": "^3.6.0",
-    "eslint-plugin-es5": "^1.5.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prettier": "^5.2.5",
     "eslint-plugin-react": "^7.37.4",
@@ -84,7 +72,6 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.5.14",
-    "rimraf": "^5.0.10",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.2",
     "vite": "^5.4.15"
@@ -93,5 +80,5 @@
     "node": ">=18"
   },
   "sideEffects": false,
-  "packageManager": "pnpm@9.13.2+sha512.88c9c3864450350e65a33587ab801acf946d7c814ed1134da4a924f6df5a2120fd36b46aab68f7cd1d413149112d53c7db3a4136624cfd00ff1846a0c6cef48a"
+  "packageManager": "pnpm@9.13.2"
 }
