@@ -7,7 +7,6 @@ node_modules
 /public/build
 /app/styles/output.css
 /dist/
-/src/styles.css
 
 worker.js
 
