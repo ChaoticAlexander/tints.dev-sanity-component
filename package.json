@@ -1,6 +1,6 @@
 {
   "name": "@chaoticalexander/tints-palette",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A standalone palette component extracted from tints.dev - A 10-swatch palette generator primarily for Tailwind CSS",
   "author": "Alexander Tananica (fork of work by Simeon Griggs)",
   "license": "MIT",
